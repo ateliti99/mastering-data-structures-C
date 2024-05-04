@@ -1,15 +1,16 @@
 # Sparse Matrices: A Brief Introduction
-=====================================
 
 ## Example of a Sparse Matrix
 ---------------------------
-[0 0 0 0 0 0 0]
-[0 2 0 0 0 0 0]
-[0 0 0 0 0 0 0]
-[0 0 0 3 0 0 0]
-[0 0 0 0 0 0 0]
-[0 0 0 0 4 0 0]
-[0 0 0 0 0 0 0]
+$$\begin{bmatrix}
+0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 2 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 3 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 4 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}$$
 
 This matrix has 49 elements, but only 3 of them are non-zero. This is a sparse matrix, because most of its elements are zero.
 
@@ -40,17 +41,22 @@ There are several ways to represent sparse matrices, including:
 Each non-zero element is represented by a tuple of three values: row index, column index, and value.
 
 #### Example: Coordinate Format
-[0 0 3 0]
-[0 2 0 0]
-[1 0 0 4]
-[0 0 0 0]
+$$\begin{bmatrix}
+0 & 0 & 3 & 0 \\
+0 & 2 & 0 & 0 \\
+1 & 0 & 0 & 4 \\
+0 & 0 & 0 & 0
+\end{bmatrix}$$
 
 In coordinate format, this matrix would be represented as:
 
-(0, 2, 3)
-(1, 1, 2)
-(2, 0, 1)
-(2, 3, 4)
+$$\begin{bmatrix}
+row & col & value \\
+0 & 2 & 3 \\
+1 & 1 & 2 \\
+2 & 0 & 1 \\
+2 & 3 & 4
+\end{bmatrix}$$
 
 ### Compressed Sparse Row (CSR) Format
 
@@ -58,10 +64,12 @@ The matrix is represented as three arrays: one for the non-zero values, one for 
 
 #### Example: CSR Format
 
-[0 0 3 0]
-[0 2 0 0]
-[1 0 0 4]
-[0 0 0 0]
+$$\begin{bmatrix}
+0 & 0 & 3 & 0 \\
+0 & 2 & 0 & 0 \\
+1 & 0 & 0 & 4 \\
+0 & 0 & 0 & 0
+\end{bmatrix}$$
 
 In CSR format, this matrix would be represented as:
 
@@ -75,10 +83,12 @@ Similar to CSR format, but with the roles of rows and columns reversed.
 
 #### Example: CSC Format
 
-[0 0 3 0]
-[0 2 0 0]
-[1 0 0 4]
-[0 0 0 0]
+$$\begin{bmatrix}
+0 & 0 & 3 & 0 \\
+0 & 2 & 0 & 0 \\
+1 & 0 & 0 & 4 \\
+0 & 0 & 0 & 0
+\end{bmatrix}$$
 
 In CSC format, this matrix would be represented as:
 
