@@ -61,4 +61,83 @@ SparseMatrix_t to_sparse_matrix(int** matrix, int num_rows, int num_cols){
     return sparse_matrix;
 }
 
+// Sum two sparse matrix
+SparseMatrix_t sum_sparse_matrix(SparseMatrix_t* m1, SparseMatrix_t* m2){
+    SparseMatrix_t m_sum;
+    int i, j, k;
+
+    // Check that is possible to sum the matrices
+    if(m1->num_rows != m2->num_rows || m1->num_cols != m2->num_cols){
+        printf("Matrices dimension to not coincide!\n");
+        return m_sum;
+    }
+    
+    // Add number of rows and cols to the sum matrix
+    m_sum.num_rows = m1->num_rows;
+    m_sum.num_cols = m1->num_cols;
+
+    // Allocate space for at least the sum of non-zero elements
+    m_sum.non_zero_elements = m1->non_zero_elements + m2->non_zero_elements; // not the correct value
+    m_sum.row = (int*)malloc(m_sum.non_zero_elements * sizeof(int));
+    m_sum.col = (int*)malloc(m_sum.non_zero_elements * sizeof(int));
+    m_sum.values = (int*)malloc(m_sum.non_zero_elements * sizeof(int));
+
+    // Sum the matrices
+    i = 0, j = 0, k = 0;
+    while(i < m1->non_zero_elements && j < m2->non_zero_elements){
+        if(m1->row[i] < m2->row[j]){
+            m_sum.row[k] = m1->row[i];
+            m_sum.col[k] = m1->col[i];
+            m_sum.values[k] = m1->values[i];
+            i++;
+        }else if(m1->row > m2->row){
+            m_sum.row[k] = m2->row[j];
+            m_sum.col[k] = m2->col[j];
+            m_sum.values[k] = m2->values[j];
+            j++;
+        }else{
+            if(m1->col < m2->col){
+                m_sum.row[k] = m1->row[i];
+                m_sum.col[k] = m1->col[i];
+                m_sum.values[k] = m1->values[i];
+                i++;
+            }else if(m1->col > m2->col){
+                m_sum.row[k] = m2->row[j];
+                m_sum.col[k] = m2->col[j];
+                m_sum.values[k] = m2->values[j];
+                j++;
+            }else{
+                m_sum.row[k] = m1->row[i];
+                m_sum.col[k] = m1->col[i];
+                m_sum.values[k] = m1->values[i] + m2->values[j];
+                i++;
+                j++;
+            }
+        }
+        k++;
+    }
+
+    // Copy all the remaning elements
+    while(i < m1->non_zero_elements){
+        m_sum.row[k] = m1->row[i];
+        m_sum.col[k] = m1->col[i];
+        m_sum.values[k] = m1->values[i];
+        i++;
+        k++;
+    }
+
+    while(j < m2->non_zero_elements){
+        m_sum.row[k] = m2->row[j];
+        m_sum.col[k] = m2->col[j];
+        m_sum.values[k] = m2->values[j];
+        j++;
+        k++;
+    }
+    
+    // Update the correct number of non-zero elements
+    m_sum.non_zero_elements = k;
+
+    return m_sum;
+}
+
 #endif /* D20A11F1_431E_43EC_86E1_47671B3DB1CF */

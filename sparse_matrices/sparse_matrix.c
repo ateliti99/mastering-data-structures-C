@@ -9,6 +9,7 @@ int main(){
     int num_cols = 2;
     int** matrix;
     SparseMatrix_t sparse_matrix;
+    SparseMatrix_t sparse_sum_matrix;
 
     // Allocate space for the matrix
     matrix = (int**)malloc(num_rows * sizeof(int*));
@@ -20,7 +21,7 @@ int main(){
     matrix[0][0] = 0; 
     matrix[0][1] = 1;
     matrix[1][0] = 0;
-    matrix[1][1] = 5;
+    matrix[1][1] = 10;
 
     // Print matrix values
     printf("Dense Matrix: [ ");
@@ -38,6 +39,15 @@ int main(){
     printf("v|r|c\n");
     for(int i = 0; i < sparse_matrix.non_zero_elements; i++){
         printf("%d|%d|%d\n", sparse_matrix.values[i], sparse_matrix.row[i], sparse_matrix.col[i]);
+    }
+
+    printf("\n");
+
+    // Sum matrices
+    sparse_sum_matrix = sum_sparse_matrix(&sparse_matrix, &sparse_matrix);
+    printf("v|r|c\n");
+    for(int i = 0; i < sparse_sum_matrix.non_zero_elements; i++){
+        printf("%d|%d|%d\n", sparse_sum_matrix.values[i], sparse_sum_matrix.row[i], sparse_sum_matrix.col[i]);
     }
 
     return 0;
